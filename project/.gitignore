@@ -1,3 +1,13 @@
 /.idea/
 /target/
 /project.iml
+
+/database/target/
+/database/database.iml
+
+/service/target/
+/service/service.iml
+
+/web/target/
+/web/web.iml
+

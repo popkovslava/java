@@ -16,7 +16,9 @@
 
 <h1 style="text-align: center">${requestScope.request1.name}</h1>
 <h2 style="text-align: center">${requestScope.request1.massage}</h2>
-<div style="text-align: center"><%@ include file="menu.jsp"%></div>
+<div style="text-align: center">
+    <%@ include file="menu.jsp" %>
+</div>
 
 <c:if test="${not empty requestScope.request3.text1}">
     <div style="text-align: center">${requestScope.request3.text2}</div>
