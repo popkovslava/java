@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+
+        <property name="connection.url">jdbc:postgresql://localhost:5432/postgres</property>
+        <property name="connection.driver_class">org.postgresql.Driver</property>
+        <property name="connection.username">postgres</property>
+        <property name="connection.password">pass</property>
+        <property name="dialect">org.hibernate.dialect.PostgreSQL95Dialect</property>
+        <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
+
+
+        <mapping class="org.project.entity.MenuEntity"/>
+        <mapping class="org.project.entity.LicenseEntity"/>
+        <mapping class="org.project.entity.PagesEntity"/>
+        <mapping class="org.project.entity.RoleEntity"/>
+        <mapping class="org.project.entity.UsersEntity"/>
+        <mapping class="org.project.entity.UserRoleEntity"/>
+        <mapping class="org.project.entity.TrademarkEntity"/>
+        <mapping class="org.project.entity.PostCtegoryEntity"/>
+        <mapping class="org.project.entity.PostsEntity"/>
+        <mapping class="org.project.entity.LangEntity"/>
+        <mapping class="org.project.entity.LnagPagesEntity"/>
+        <mapping class="org.project.entity.UsersLicenseEntity"/>
+        <mapping class="org.project.entity.UserTrademarkEntity"/>
+
+    </session-factory>
+</hibernate-configuration>

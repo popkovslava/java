@@ -1,37 +1,26 @@
 package org.progect.service;
 
-import org.project.dao.DAOText;
-import org.project.dao.DaoMenu;
-import org.project.dao.DaoStart;
-import org.project.entity.MenuEntity;
-import org.project.entity.StartEntity;
-import org.project.entity.TextEntity;
+import org.project.dao.PostsDao;
+import org.project.entity.PostsEntity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ProjectService {
-       private static final ProjectService INSTANCE = new ProjectService();
-       public  StartEntity StartEntity () {
-            return new StartEntity (
-                   DaoStart.getInstance().getDaoStartName(),
-                   DaoStart.getInstance().getDaoStartMassage()
-                   );
-        }
 
-        public MenuEntity MenuEntity(){
-                  return new  MenuEntity(
-                          DaoMenu.getInstance().getDaoMenu()
-                  );
-        }
+    private static final ProjectService INSTANCE = new ProjectService();
 
-        public TextEntity TextEntity(){
-            return new TextEntity(
-                    DAOText.getInstance().getDAOText1(),
-                    DAOText.getInstance().getDAOText2()
-            );
-        }
+    public List<PostsEntity> getPost() {
+        return PostsDao.getInstance().getAll();
+    }
 
-        public static ProjectService getInstance() {
-            return INSTANCE;
-        }
+    public void setPost() {
+         PostsEntity postsEntity=new PostsEntity();
+         postsEntity.setTitle("Test");
+         postsEntity.setText("Test Text");
+         PostsDao.getInstance().save(postsEntity);
+    }
+
+    public static ProjectService getInstance() {
+        return INSTANCE;
+    }
 }
