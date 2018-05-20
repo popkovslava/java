@@ -1,10 +1,10 @@
 package org.project.dao.Interface;
-
 import java.util.List;
 import org.project.entity.Pages;
 
 
-public interface PagesDaoInterface extends BaseDaoInterface<Long, Pages> {
+
+public interface PagesDaoInterface  extends BaseDaoInterface<Long, Pages>  {
 
     Long save(Pages object);
 

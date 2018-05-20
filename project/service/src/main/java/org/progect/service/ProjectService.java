@@ -1,19 +1,23 @@
 package org.progect.service;
 
+import java.util.List;
+import org.project.dao.PagesDao;
+import org.project.entity.Pages;
+
 public class ProjectService {
 
     private static final ProjectService INSTANCE = new ProjectService();
 
-//    public List<Posts> getPost() {
-//        return Pages.getInstance().getAll();
-//    }
+    public List<Pages> getPages() {
+        return PagesDao.getInstance().findAll();
+    }
 
-//    public void setPost() {
-//         Posts postsEntity=new Posts();
-//         postsEntity.setTitle("Test");
-//         postsEntity.setText("Test Text");
-//         PostsDao.getInstance().save(postsEntity);
-//    }
+    public void setText(String text){
+        Pages pages=new Pages();
+        pages.setTitle(text);
+        pages.setDescription(text);
+        PagesDao.getInstance().save(pages);
+    }
 
     public static ProjectService getInstance() {
         return INSTANCE;

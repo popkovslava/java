@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 import org.project.entity.Base;
 
+
 public interface BaseDaoInterface<PK extends Serializable, T extends Base<PK>> {
 
     PK save(T object);
@@ -16,4 +17,5 @@ public interface BaseDaoInterface<PK extends Serializable, T extends Base<PK>> {
     void update(T object);
 
     void delete(T object);
+
 }
