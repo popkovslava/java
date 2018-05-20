@@ -5,7 +5,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.project.entity.BaseEntity;
+import org.project.entity.Base;
 
 import java.util.*;
 
@@ -13,7 +13,7 @@ public abstract class BaseDao {
 
     protected static final SessionFactory FACTORY = new Configuration().configure().buildSessionFactory();
 
-    protected static <T extends BaseEntity<?>> void saveBase(T... object) {
+    protected static <T extends Base<?>> void saveBase(T... object) {
         Session session = FACTORY.openSession();
         try {
             session.beginTransaction();
@@ -28,7 +28,7 @@ public abstract class BaseDao {
         }
     }
 
-    protected static <T extends BaseEntity<?>> void updateBase(T object) {
+    protected static <T extends Base<?>> void updateBase(T object) {
         Session session = FACTORY.openSession();
         try {
             session.beginTransaction();
@@ -41,7 +41,7 @@ public abstract class BaseDao {
         }
     }
 
-    protected static <T extends BaseEntity<?>> T getByIdBase(T object, Long id) {
+    protected static <T extends Base<?>> T getByIdBase(T object, Long id) {
         Session session = FACTORY.openSession();
         T result = null;
         try {
@@ -57,14 +57,12 @@ public abstract class BaseDao {
         return result;
     }
 
-
-    protected static <T extends BaseEntity<?>> List<T> getAllBase(T object) {
+    protected static <T extends Base<?>> List<T> getAllBase(T object) {
         Session session = FACTORY.openSession();
         List<T> list = new ArrayList<>();
-
         try {
             session.beginTransaction();
-            list = session.createQuery("from MenuEntity").list();
+            list = session.createQuery("from Menu").list();
             session.getTransaction().commit();
         } catch (HibernateException e) {
             session.getTransaction().rollback();
@@ -74,7 +72,7 @@ public abstract class BaseDao {
         return list;
     }
 
-    protected static <T extends BaseEntity<?>> void removeByIdBase(T object, Long id) {
+    protected static <T extends Base<?>> void removeByIdBase(T object, Long id) {
         Session session = FACTORY.openSession();
         try {
             session.beginTransaction();

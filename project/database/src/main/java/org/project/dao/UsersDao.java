@@ -1,6 +1,6 @@
 package org.project.dao;
 
-import org.project.entity.UsersEntity;
+import org.project.entity.Users;
 
 import java.util.List;
 
@@ -8,24 +8,24 @@ public class UsersDao extends BaseDao {
 
     private static final UsersDao INSTANCE = new UsersDao();
 
-    public void save(UsersEntity users) {
+    public void save(Users users) {
         saveBase(users);
     }
 
-    public void update(UsersEntity users) {
+    public void update(Users users) {
         updateBase(users);
     }
 
-    public UsersEntity getById(Long id) {
-        return getByIdBase(new UsersEntity(), id);
+    public Users getById(Long id) {
+        return getByIdBase(new Users(), id);
     }
 
     public void removeById(Long id) {
-        removeByIdBase(new UsersEntity(), id);
+        removeByIdBase(new Users(), id);
     }
 
-    public List<UsersEntity> getAll() {
-        return getAllBase(new UsersEntity());
+    public List<Users> getAll() {
+        return getAllBase(new Users());
     }
 
     public static UsersDao getInstance() {

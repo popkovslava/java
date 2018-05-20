@@ -14,19 +14,26 @@
         <property name="format_sql">true</property>
 
 
-        <mapping class="org.project.entity.MenuEntity"/>
-        <mapping class="org.project.entity.LicenseEntity"/>
-        <mapping class="org.project.entity.PagesEntity"/>
-        <mapping class="org.project.entity.RoleEntity"/>
-        <mapping class="org.project.entity.UsersEntity"/>
-        <mapping class="org.project.entity.UserRoleEntity"/>
-        <mapping class="org.project.entity.TrademarkEntity"/>
-        <mapping class="org.project.entity.PostCtegoryEntity"/>
-        <mapping class="org.project.entity.PostsEntity"/>
-        <mapping class="org.project.entity.LangEntity"/>
-        <mapping class="org.project.entity.LnagPagesEntity"/>
-        <mapping class="org.project.entity.UsersLicenseEntity"/>
-        <mapping class="org.project.entity.UserTrademarkEntity"/>
+        <!--&lt;!&ndash; DB schema will be updated if needed &ndash;&gt;-->
+        <property name="hibernate.hbm2ddl.auto">create</property>
+
+        <mapping class="org.project.entity.Menu"/>
+        <mapping class="org.project.entity.License"/>
+        <mapping class="org.project.entity.Pages"/>
+        <mapping class="org.project.entity.Role"/>
+        <mapping class="org.project.entity.Users"/>
+        <mapping class="org.project.entity.UserRole"/>
+        <mapping class="org.project.entity.Trademark"/>
+        <mapping class="org.project.entity.PostCtegory"/>
+        <mapping class="org.project.entity.Posts"/>
+        <mapping class="org.project.entity.Lang"/>
+        <mapping class="org.project.entity.LnagPages"/>
+        <mapping class="org.project.entity.UsersLicense"/>
+        <mapping class="org.project.entity.UserTrademark"/>
+        <mapping class="org.project.entity.UserData"/>
+        <mapping class="org.project.entity.CartLicense"/>
+        <mapping class="org.project.entity.CartTrademark"/>
+        <mapping class="org.project.entity.Cart"/>
 
     </session-factory>
 </hibernate-configuration>

@@ -1,33 +1,31 @@
 package org.project.dao;
 
-
-import org.project.entity.PostCtegoryEntity;
+import org.project.entity.PostCtegory;
 
 import java.util.List;
 
-
-public class PostCategoryDao extends BaseDao{
+public class PostCategoryDao extends BaseDao {
 
     private static final PostCategoryDao INSTANCE = new PostCategoryDao();
 
-    public void save(PostCtegoryEntity postCtegory) {
+    public void save(PostCtegory postCtegory) {
         saveBase(postCtegory);
     }
 
-    public void update(PostCtegoryEntity postCtegory) {
+    public void update(PostCtegory postCtegory) {
         updateBase(postCtegory);
     }
 
-    public PostCtegoryEntity getById(Long id) {
-        return getByIdBase(new PostCtegoryEntity(), id);
+    public PostCtegory getById(Long id) {
+        return getByIdBase(new PostCtegory(), id);
     }
 
     public void removeById(Long id) {
-        removeByIdBase(new PostCtegoryEntity(), id);
+        removeByIdBase(new PostCtegory(), id);
     }
 
-    public List<PostCtegoryEntity> getAll() {
-        return getAllBase(new PostCtegoryEntity());
+    public List<PostCtegory> getAll() {
+        return getAllBase(new PostCtegory());
     }
 
     public static PostCategoryDao getInstance() {

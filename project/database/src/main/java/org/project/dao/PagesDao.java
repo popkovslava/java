@@ -1,32 +1,31 @@
 package org.project.dao;
 
-
-import org.project.entity.PagesEntity;
+import org.project.entity.Pages;
 
 import java.util.List;
 
-public class PagesDao extends  BaseDao{
+public class PagesDao extends BaseDao {
 
-    private static final PagesDao INSTANCE =new PagesDao();
+    private static final PagesDao INSTANCE = new PagesDao();
 
-    public void save(PagesEntity pages) {
+    public void save(Pages pages) {
         saveBase(pages);
     }
 
-    public void update(PagesEntity pages) {
+    public void update(Pages pages) {
         updateBase(pages);
     }
 
-    public PagesEntity getById(Long id) {
-        return getByIdBase(new PagesEntity(), id);
+    public Pages getById(Long id) {
+        return getByIdBase(new Pages(), id);
     }
 
     public void removeById(Long id) {
-        removeByIdBase(new PagesEntity(), id);
+        removeByIdBase(new Pages(), id);
     }
 
-    public List<PagesEntity> getAll() {
-        return getAllBase(new PagesEntity());
+    public List<Pages> getAll() {
+        return getAllBase(new Pages());
     }
 
     public static PagesDao getInstance() {

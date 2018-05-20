@@ -1,32 +1,31 @@
 package org.project.dao;
 
-import org.project.entity.MenuEntity;
+import org.project.entity.Menu;
 
 import java.util.List;
-
 
 public class MenuDao extends BaseDao {
 
     private static final MenuDao INSTANCE = new MenuDao();
 
-    public void save(MenuEntity menu) {
+    public void save(Menu menu) {
         saveBase(menu);
     }
 
-    public void update(MenuEntity menu) {
+    public void update(Menu menu) {
         updateBase(menu);
     }
 
-    public MenuEntity getById(Long id) {
-        return getByIdBase(new MenuEntity(), id);
+    public Menu getById(Long id) {
+        return getByIdBase(new Menu(), id);
     }
 
     public void removeById(Long id) {
-        removeByIdBase(new MenuEntity(), id);
+        removeByIdBase(new Menu(), id);
     }
 
-    public List<MenuEntity> getAll() {
-        return getAllBase(new MenuEntity());
+    public List<Menu> getAll() {
+        return getAllBase(new Menu());
     }
 
     public static MenuDao getInstance() {

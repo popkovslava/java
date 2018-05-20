@@ -1,31 +1,31 @@
 package org.project.dao;
 
-import org.project.entity.RoleEntity;
+import org.project.entity.Role;
 
 import java.util.List;
 
 public class RoleDao extends BaseDao {
 
-    private static final RoleDao INSTANCE =new RoleDao();
+    private static final RoleDao INSTANCE = new RoleDao();
 
-    public void save(RoleEntity menu) {
+    public void save(Role menu) {
         saveBase(menu);
     }
 
-    public void update(RoleEntity menu) {
+    public void update(Role menu) {
         updateBase(menu);
     }
 
-    public RoleEntity getById(Long id) {
-        return getByIdBase(new RoleEntity(), id);
+    public Role getById(Long id) {
+        return getByIdBase(new Role(), id);
     }
 
     public void removeById(Long id) {
-        removeByIdBase(new RoleEntity(), id);
+        removeByIdBase(new Role(), id);
     }
 
-    public List<RoleEntity> getAll() {
-        return getAllBase(new RoleEntity());
+    public List<Role> getAll() {
+        return getAllBase(new Role());
     }
 
     public static RoleDao getInstance() {

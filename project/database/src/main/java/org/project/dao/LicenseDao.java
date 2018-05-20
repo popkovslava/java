@@ -1,6 +1,6 @@
 package org.project.dao;
 
-import org.project.entity.LicenseEntity;
+import org.project.entity.License;
 
 import java.util.List;
 
@@ -9,24 +9,24 @@ public class LicenseDao extends BaseDao {
 
     private static final LicenseDao INSTANCE = new LicenseDao();
 
-    public void save(LicenseEntity license) {
+    public void save(License license) {
         saveBase(license);
     }
 
-    public void update(LicenseEntity license) {
+    public void update(License license) {
         updateBase(license);
     }
 
-    public LicenseEntity getById(Long id) {
-        return getByIdBase(new LicenseEntity(), id);
+    public License getById(Long id) {
+        return getByIdBase(new License(), id);
     }
 
     public void removeById(Long id) {
-        removeByIdBase(new LicenseEntity(), id);
+        removeByIdBase(new License(), id);
     }
 
-    public List<LicenseEntity> getAll() {
-        return getAllBase(new LicenseEntity());
+    public List<License> getAll() {
+        return getAllBase(new License());
     }
 
     public static LicenseDao getInstance() {
