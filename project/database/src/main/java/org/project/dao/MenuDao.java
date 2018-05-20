@@ -1,35 +1,17 @@
 package org.project.dao;
 
+import java.util.List;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import org.project.dao.Interface.MenuDaoInterface;
 import org.project.entity.Menu;
 
-import java.util.List;
-
-public class MenuDao extends BaseDao {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public  class MenuDao extends BaseDao<Long,Menu> implements MenuDaoInterface {
 
     private static final MenuDao INSTANCE = new MenuDao();
-
-    public void save(Menu menu) {
-        saveBase(menu);
-    }
-
-    public void update(Menu menu) {
-        updateBase(menu);
-    }
-
-    public Menu getById(Long id) {
-        return getByIdBase(new Menu(), id);
-    }
-
-    public void removeById(Long id) {
-        removeByIdBase(new Menu(), id);
-    }
-
-    public List<Menu> getAll() {
-        return getAllBase(new Menu());
-    }
 
     public static MenuDao getInstance() {
         return INSTANCE;
     }
-
 }

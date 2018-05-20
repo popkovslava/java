@@ -15,7 +15,7 @@
 
 
         <!--&lt;!&ndash; DB schema will be updated if needed &ndash;&gt;-->
-        <property name="hibernate.hbm2ddl.auto">create</property>
+        <!--<property name="hibernate.hbm2ddl.auto">create</property>-->
 
         <mapping class="org.project.entity.Menu"/>
         <mapping class="org.project.entity.License"/>

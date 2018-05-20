@@ -14,12 +14,11 @@ import java.io.IOException;
 public class StartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("posts", ProjectService.getInstance().getPost());
-        getServletContext().getRequestDispatcher("/WEB-INF/jsp/posts.jsp")
-                .forward(req, resp);
+//        req.setAttribute("posts", ProjectService.getInstance().getPost());
+//        getServletContext().getRequestDispatcher("/WEB-INF/jsp/posts.jsp")
+//                .forward(req, resp);
 
     }
-
 }
 
 

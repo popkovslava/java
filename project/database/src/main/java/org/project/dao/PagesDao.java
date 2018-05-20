@@ -1,32 +1,15 @@
 package org.project.dao;
 
+
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import org.project.dao.Interface.PagesDaoInterface;
 import org.project.entity.Pages;
 
-import java.util.List;
-
-public class PagesDao extends BaseDao {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class PagesDao extends BaseDao<Long, Pages> implements PagesDaoInterface {
 
     private static final PagesDao INSTANCE = new PagesDao();
-
-    public void save(Pages pages) {
-        saveBase(pages);
-    }
-
-    public void update(Pages pages) {
-        updateBase(pages);
-    }
-
-    public Pages getById(Long id) {
-        return getByIdBase(new Pages(), id);
-    }
-
-    public void removeById(Long id) {
-        removeByIdBase(new Pages(), id);
-    }
-
-    public List<Pages> getAll() {
-        return getAllBase(new Pages());
-    }
 
     public static PagesDao getInstance() {
         return INSTANCE;

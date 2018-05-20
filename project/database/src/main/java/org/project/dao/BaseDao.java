@@ -1,89 +1,72 @@
 package org.project.dao;
 
-import org.hibernate.Hibernate;
-import org.hibernate.HibernateException;
+import java.io.Serializable;
+
+import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import org.project.dao.Interface.BaseDaoInterface;
 import org.project.entity.Base;
+import org.project.manager.SessionFactoryManager;
+import java.lang.reflect.ParameterizedType;
 
-import java.util.*;
+public class BaseDao<PK extends Serializable, T extends Base<PK>> implements BaseDaoInterface<PK, T> {
 
-public abstract class BaseDao {
+    protected static final SessionFactory SESSION_FACTORY = SessionFactoryManager.getSessionFactory();
 
-    protected static final SessionFactory FACTORY = new Configuration().configure().buildSessionFactory();
+    private Class<T> clazz;
 
-    protected static <T extends Base<?>> void saveBase(T... object) {
-        Session session = FACTORY.openSession();
-        try {
+    public BaseDao() {
+        ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
+        this.clazz = (Class<T>) type.getActualTypeArguments()[1];
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public PK save(T object) {
+        try (Session session = SESSION_FACTORY.openSession()) {
             session.beginTransaction();
-            Arrays.asList(object).forEach(it -> {
-                session.save(it);
-            });
+            Serializable id = session.save(object);
             session.getTransaction().commit();
-        } catch (HibernateException e) {
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
+            return (PK) id;
         }
     }
 
-    protected static <T extends Base<?>> void updateBase(T object) {
-        Session session = FACTORY.openSession();
-        try {
+    @Override
+    public T findById(PK id) {
+        try (Session session = SESSION_FACTORY.openSession()) {
+            return session.find(clazz, id);
+        }
+    }
+
+    @Override
+    public List<T> findAll() {
+        try (Session session = SESSION_FACTORY.openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<T> criteria = cb.createQuery(clazz);
+            Root<T> root = criteria.from(clazz);
+            return session.createQuery(criteria).list();
+        }
+    }
+
+    @Override
+    public void update(T object) {
+        try (Session session = SESSION_FACTORY.openSession()) {
             session.beginTransaction();
             session.update(object);
             session.getTransaction().commit();
-        } catch (HibernateException e) {
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
         }
     }
 
-    protected static <T extends Base<?>> T getByIdBase(T object, Long id) {
-        Session session = FACTORY.openSession();
-        T result = null;
-        try {
+    @Override
+    public void delete(T object) {
+        try (Session session = SESSION_FACTORY.openSession()) {
             session.beginTransaction();
-            result = (T) session.load(object.getClass(), id);
-            Hibernate.initialize(result);
+            session.delete(object);
             session.getTransaction().commit();
-        } catch (HibernateException e) {
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
-        }
-        return result;
-    }
-
-    protected static <T extends Base<?>> List<T> getAllBase(T object) {
-        Session session = FACTORY.openSession();
-        List<T> list = new ArrayList<>();
-        try {
-            session.beginTransaction();
-            list = session.createQuery("from Menu").list();
-            session.getTransaction().commit();
-        } catch (HibernateException e) {
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
-        }
-        return list;
-    }
-
-    protected static <T extends Base<?>> void removeByIdBase(T object, Long id) {
-        Session session = FACTORY.openSession();
-        try {
-            session.beginTransaction();
-            session.remove(session.find(object.getClass(), id));
-            session.getTransaction().commit();
-        } catch (HibernateException e) {
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
         }
     }
-
-
 }
