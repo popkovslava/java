@@ -14,9 +14,8 @@ import java.io.IOException;
 public class StartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("request1",  ProjectService.getInstance().StartEntity());
-        req.setAttribute("request2",  ProjectService.getInstance().MenuEntity());
-        getServletContext().getRequestDispatcher("/WEB-INF/jsp/start.jsp")
+        req.setAttribute("posts", ProjectService.getInstance().getPost());
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/posts.jsp")
                 .forward(req, resp);
 
     }
