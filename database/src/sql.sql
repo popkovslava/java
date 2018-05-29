@@ -16,6 +16,7 @@ DROP TABLE IF EXISTS business_contact.lnag_page CASCADE;
 DROP TABLE IF EXISTS business_contact.cart CASCADE;
 DROP TABLE IF EXISTS business_contact.user_data CASCADE;
 
+
 CREATE TABLE business_contact.menu(
   id BIGSERIAL PRIMARY KEY ,
   title VARCHAR(100)
