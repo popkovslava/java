@@ -2,71 +2,43 @@ package org.project.dao;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.project.entity.Base;
 import org.project.manager.SessionFactoryManager;
-import java.lang.reflect.ParameterizedType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.GenericTypeResolver;
 
 public class BaseDao<PK extends Serializable, T extends Base<PK>> implements org.project.dao.Interface.BaseDao<PK, T> {
 
     protected static final SessionFactory SESSION_FACTORY = SessionFactoryManager.getSessionFactory();
 
+    @Autowired
+    protected SessionFactory sessionFactory;
+
     private Class<T> clazz;
 
-    public BaseDao() {
-        ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
-        this.clazz = (Class<T>) type.getActualTypeArguments()[1];
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
-    public PK save(T object) {
-        try (Session session = SESSION_FACTORY.openSession()) {
-            session.beginTransaction();
-            Serializable id = session.save(object);
-            session.getTransaction().commit();
-            return (PK) id;
-        }
+    public BaseDao() {
+        this.clazz = (Class<T>) GenericTypeResolver.resolveTypeArguments(getClass(), BaseDao.class)[1];
     }
 
-    @Override
-    public T findById(PK id) {
-        try (Session session = SESSION_FACTORY.openSession()) {
-            return session.find(clazz, id);
-        }
+    @SuppressWarnings("unchecked")
+    public PK save(T entity) {
+        return (PK) sessionFactory.getCurrentSession().save(entity);
     }
 
-    @Override
-    public List<T> findAll() {
-        try (Session session = SESSION_FACTORY.openSession()) {
-            CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<T> criteria = cb.createQuery(clazz);
-            Root<T> root = criteria.from(clazz);
-            criteria.select(root);
-            return session.createQuery(criteria).list();
-        }
+
+    public void delete(T entity) {
+        sessionFactory.getCurrentSession().delete(entity);
     }
 
-    @Override
-    public void update(T object) {
-        try (Session session = SESSION_FACTORY.openSession()) {
-            session.beginTransaction();
-            session.update(object);
-            session.getTransaction().commit();
-        }
+    public void update(T entity) {
+        sessionFactory.getCurrentSession().update(entity);
     }
 
-    @Override
-    public void delete(T object) {
-        try (Session session = SESSION_FACTORY.openSession()) {
-            session.beginTransaction();
-            session.delete(object);
-            session.getTransaction().commit();
-        }
+    public T findOne(PK id) {
+        return sessionFactory.getCurrentSession().find(clazz, id);
     }
 
     @Override
@@ -76,5 +48,11 @@ public class BaseDao<PK extends Serializable, T extends Base<PK>> implements org
             session.createQuery("delete from Lang ");
             session.getTransaction().commit();
         }
+    }
+
+    public List<T> findAll() {
+        return sessionFactory.getCurrentSession()
+                .createQuery(String.format("select e from %s e", clazz.getSimpleName()), clazz)
+                .list();
     }
 }
