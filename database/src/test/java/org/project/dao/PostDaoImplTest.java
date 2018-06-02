@@ -3,8 +3,8 @@ package org.project.dao;
 import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.project.dao.Interface.PostsCategoryDao;
-import org.project.entity.PostsCategory;
+import org.project.dao.Interface.PostsDao;
+import org.project.entity.Posts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -18,36 +18,36 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringRunner.class)
 @ContextConfiguration("classpath:application-context.xml")
 @Transactional
-public class PostsCategoryDaoImplTest {
+public class PostDaoImplTest {
 
     @Autowired
-    private PostsCategoryDao postsCategoryDao;
+    private PostsDao postsDao;
 
     @Test
     public void checkExisting() {
-        assertNotNull("Spring context is not loaded", postsCategoryDao);
+        assertNotNull("Spring context is not loaded", postsDao);
     }
 
     @Test
     public void checkSaveEntity() {
-        PostsCategory postsCategory = new PostsCategory();
-        postsCategory.setTitle("test");
-        Long id = postsCategoryDao.save(postsCategory);
+        Posts posts = new Posts();
+        posts.setTitle("test");
+        Long id = postsDao.save(posts);
         assertNotNull("Entity is not saved", id);
     }
 
     @Test
     public void checkFindAll() {
-        List<PostsCategory> posts = postsCategoryDao.findAll();
+        List<Posts> posts = postsDao.findAll();
         assertThat("Employees collection is not empty", posts, hasSize(0));
     }
 
     @Test
     public void checkFindEntityById() {
-        PostsCategory posts = new PostsCategory();
+        Posts posts = new Posts();
         posts.setTitle("test");
-        Long id = postsCategoryDao.save(posts);
-        PostsCategory menu1 = postsCategoryDao.findOne(id);
+        Long id = postsDao.save(posts);
+        Posts menu1 = postsDao.findOne(id);
         assertNotNull("FindById does not work", menu1);
     }
 

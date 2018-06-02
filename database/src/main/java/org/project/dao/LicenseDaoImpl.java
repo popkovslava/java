@@ -1,16 +1,9 @@
 package org.project.dao;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import org.project.dao.Interface.LicenseDao;
 import org.project.entity.License;
+import org.springframework.stereotype.Repository;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class LicenseDaoImpl extends BaseDao<Long, License> implements LicenseDao {
-
-    private static final LicenseDaoImpl INSTANCE = new LicenseDaoImpl();
-
-    public static LicenseDaoImpl getInstance() {
-        return INSTANCE;
-    }
+@Repository
+public class LicenseDaoImpl extends BaseDaoImpl<Long, License> implements LicenseDao {
 }

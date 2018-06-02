@@ -15,7 +15,4 @@ public interface BaseDao<PK extends Serializable, T extends Base<PK>> {
     void update(T object);
 
     void delete(T object);
-
-    void removeAll();
-
 }

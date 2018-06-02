@@ -2,15 +2,8 @@ package org.project.dao;
 
 import org.project.dao.Interface.LangDao;
 import org.project.entity.Lang;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Repository;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class LangDaoImpl extends BaseDao<Long, Lang> implements LangDao {
-
-       private static final LangDaoImpl INSTANCE = new LangDaoImpl();
-
-       public static LangDaoImpl getInstance() {
-           return INSTANCE;
-       }
+@Repository
+public class LangDaoImpl extends BaseDaoImpl<Long, Lang> implements LangDao {
 }

@@ -1,82 +1,52 @@
 package org.project.dao;
 
-import java.io.Serializable;
 import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.project.dao.Interface.LicenseDao;
 import org.project.entity.License;
-import org.project.manager.SessionFactoryManager;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.testng.Assert.assertNotEquals;
+import static org.junit.Assert.assertThat;
 
+@RunWith(SpringRunner.class)
+@ContextConfiguration("classpath:application-context.xml")
+@Transactional
 public class LicenseDaoImplTest {
 
-    private static final SessionFactory SESSION_FACTORY = SessionFactoryManager.getSessionFactory();
+    @Autowired
+    private LicenseDao licenseDao;
 
-    @AfterClass
-    public static void after() {
-        SESSION_FACTORY.close();
+    @Test
+    public void checkExisting() {
+        assertNotNull("Spring context is not loaded", licenseDao);
     }
 
-    @Before
-    public void cleanEntity() {
-        try (Session session = SESSION_FACTORY.openSession()) {
-            session.beginTransaction();
-            session.createQuery("delete from License ");
-            session.getTransaction().commit();
-        }
-    }
-
-    @Test(priority = 1)
+    @Test
     public void checkSaveEntity() {
-        License list = new License();
-        list.setTitle("Save");
-        Serializable lis = LicenseDaoImpl.getInstance().save(list);
-        assertNotNull("Id is null", lis);
+        License license = new License();
+        license.setTitle("test");
+        Long id = licenseDao.save(license);
+        assertNotNull("Entity is not saved", id);
     }
 
-    @Test(priority = 2)
-    public void checkFindById() {
-        List<License> list = LicenseDaoImpl.getInstance().findAll();
-        for (License li : list) {
-            License ln = LicenseDaoImpl.getInstance().findById(li.getId());
-            assertNotNull("Id is null", ln);
-        }
+    @Test
+    public void checkFindAll() {
+        List<License> licenses = licenseDao.findAll();
+        assertThat("Employees collection is not empty", licenses, hasSize(0));
     }
 
-    @Test(priority = 3)
-    public void findAll() {
-        List<License> list = LicenseDaoImpl.getInstance().findAll();
-        assertNotNull("Id is null", list);
+    @Test
+    public void checkFindEntityById() {
+        License license = new License();
+        license.setTitle("test");
+        Long id = licenseDao.save(license);
+        License license1 = licenseDao.findOne(id);
+        assertNotNull("FindById does not work", license1);
     }
-
-    @Test(priority = 4)
-    public void update() {
-        List<License> list = LicenseDaoImpl.getInstance().findAll();
-        for (License li : list) {
-            String old = li.getTitle();
-            li.setId(li.getId());
-            li.setTitle("Update");
-            li.setArticle("Update");
-            LicenseDaoImpl.getInstance().update(li);
-            License news = LicenseDaoImpl.getInstance().findById(li.getId());
-            assertNotEquals(old, news.getTitle());
-            assertNotNull("Id is null", news);
-        }
-    }
-
-    @Test(priority = 5)
-    public void delete() {
-        List<License> list = LicenseDaoImpl.getInstance().findAll();
-        for (License li : list) {
-            LicenseDaoImpl.getInstance().delete(LicenseDaoImpl.getInstance().findById(li.getId()));
-        }
-        assertTrue(!list.isEmpty());
-    }
-
 }

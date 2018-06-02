@@ -23,4 +23,5 @@ public abstract class Cart extends Base<Long> {
 
     @Column(name = "name", nullable = false)
     private String name;
+
 }

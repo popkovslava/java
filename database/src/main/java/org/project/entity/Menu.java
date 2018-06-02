@@ -24,6 +24,10 @@ public class Menu extends Base<Long> {
     @Column(name = "title", nullable = false)
     private String title;
 
+    public Menu(String title) {
+        this.title = title;
+    }
+
     @OneToMany(mappedBy = "menu", cascade = {CascadeType.ALL})
     private Set<Pages> page;
 }

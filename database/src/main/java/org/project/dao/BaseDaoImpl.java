@@ -2,32 +2,29 @@ package org.project.dao;
 
 import java.io.Serializable;
 import java.util.List;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.project.dao.Interface.BaseDao;
 import org.project.entity.Base;
-import org.project.manager.SessionFactoryManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.GenericTypeResolver;
 
-public class BaseDao<PK extends Serializable, T extends Base<PK>> implements org.project.dao.Interface.BaseDao<PK, T> {
-
-    protected static final SessionFactory SESSION_FACTORY = SessionFactoryManager.getSessionFactory();
+public class BaseDaoImpl<PK extends Serializable, T extends Base<PK>> implements BaseDao<PK, T> {
 
     @Autowired
     protected SessionFactory sessionFactory;
 
+
     private Class<T> clazz;
 
     @SuppressWarnings("unchecked")
-    public BaseDao() {
-        this.clazz = (Class<T>) GenericTypeResolver.resolveTypeArguments(getClass(), BaseDao.class)[1];
+    public BaseDaoImpl() {
+        this.clazz = (Class<T>) GenericTypeResolver.resolveTypeArguments(getClass(), BaseDaoImpl.class)[1];
     }
 
     @SuppressWarnings("unchecked")
     public PK save(T entity) {
         return (PK) sessionFactory.getCurrentSession().save(entity);
     }
-
 
     public void delete(T entity) {
         sessionFactory.getCurrentSession().delete(entity);
@@ -39,15 +36,6 @@ public class BaseDao<PK extends Serializable, T extends Base<PK>> implements org
 
     public T findOne(PK id) {
         return sessionFactory.getCurrentSession().find(clazz, id);
-    }
-
-    @Override
-    public void removeAll() {
-        try (Session session = SESSION_FACTORY.openSession()) {
-            session.beginTransaction();
-            session.createQuery("delete from Lang ");
-            session.getTransaction().commit();
-        }
     }
 
     public List<T> findAll() {
