@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Setter
 @Getter
-@ToString
+@ToString(callSuper = true)
 @NoArgsConstructor
 @Entity
 

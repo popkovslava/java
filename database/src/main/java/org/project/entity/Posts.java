@@ -16,7 +16,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Setter
 @Getter
-@ToString
+@ToString(callSuper = true)
 @Entity
 @Table(name = "posts", schema = "business_contact")
 public class Posts extends Base<Long> {

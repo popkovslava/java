@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.hibernate.SessionFactory;
 import org.junit.runners.MethodSorters;
-import org.project.dao.Interface.PagesDao;
+import org.project.dao.PagesRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -27,7 +27,7 @@ public class PageServiceTest {
 
 
     @Autowired
-    private PagesDao pagesDao;
+    private PagesRepository pagesDao;
 
     @Test
     public void test1() {
