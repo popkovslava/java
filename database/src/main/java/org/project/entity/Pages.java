@@ -3,7 +3,6 @@ package org.project.entity;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -35,6 +34,9 @@ public class Pages extends Base<Long> {
     @Column(name = "slug")
     private String slug;
 
+    public Pages(String title) {
+        this.title = title;
+    }
 
     @ManyToOne
     @JoinColumn(name = "menu_id")

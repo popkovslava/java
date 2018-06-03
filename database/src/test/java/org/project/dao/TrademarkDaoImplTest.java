@@ -1,81 +1,52 @@
 package org.project.dao;
 
-import java.io.Serializable;
 import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.project.dao.Interface.TrademarkDao;
 import org.project.entity.Trademark;
-import org.project.manager.SessionFactoryManager;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.testng.Assert.assertNotEquals;
+import static org.junit.Assert.assertThat;
 
+@RunWith(SpringRunner.class)
+@ContextConfiguration("classpath:application-context.xml")
+@Transactional
 public class TrademarkDaoImplTest {
 
-    private static final SessionFactory SESSION_FACTORY = SessionFactoryManager.getSessionFactory();
+    @Autowired
+    private TrademarkDao trademarkDao;
 
-    @AfterClass
-    public static void after() {
-        SESSION_FACTORY.close();
+    @Test
+    public void checkExisting() {
+        assertNotNull("Spring context is not loaded",trademarkDao);
     }
 
-    @Before
-    public void cleanEntity() {
-        try (Session session = SESSION_FACTORY.openSession()) {
-            session.beginTransaction();
-            session.createQuery("delete from Trademark ");
-            session.getTransaction().commit();
-        }
-    }
-
-    @Test(priority = 1)
+    @Test
     public void checkSaveEntity() {
-        Trademark list = new Trademark();
-        list.setTitle("Save");
-        Serializable lis = TrademarkDaoImpl.getInstance().save(list);
-        assertNotNull("Id is null", lis);
+        Trademark trademark= new Trademark();
+        trademark.setTitle("test");
+        Long id = trademarkDao.save(trademark);
+        assertNotNull("Entity is not saved", id);
     }
 
-    @Test(priority = 2)
-    public void checkFindById() {
-        List<Trademark> list = TrademarkDaoImpl.getInstance().findAll();
-        for (Trademark li : list) {
-            Trademark ln = TrademarkDaoImpl.getInstance().findById(li.getId());
-            assertNotNull("Id is null", ln);
-        }
+    @Test
+    public void checkFindAll() {
+        List<Trademark> trademarks=trademarkDao.findAll();
+        assertThat("Employees collection is not empty",trademarks, hasSize(0));
     }
 
-    @Test(priority = 3)
-    public void findAll() {
-        List<Trademark> list = TrademarkDaoImpl.getInstance().findAll();
-        assertNotNull("Id is null", list);
+    @Test
+    public void checkFindEntityById() {
+        Trademark trademark= new Trademark();
+        trademark.setTitle("test");
+        Long id =trademarkDao.save(trademark);
+        Trademark menu1 =trademarkDao.findOne(id);
+        assertNotNull("FindById does not work", menu1);
     }
-
-    @Test(priority = 4)
-    public void update() {
-        List<Trademark> list = TrademarkDaoImpl.getInstance().findAll();
-        for (Trademark li : list) {
-            String old = li.getTitle();
-            li.setId(li.getId());
-            li.setTitle("Update");
-            TrademarkDaoImpl.getInstance().update(li);
-            Trademark news = TrademarkDaoImpl.getInstance().findById(li.getId());
-            assertNotEquals(old, news.getTitle());
-            assertNotNull("Id is null", news);
-        }
-    }
-
-    @Test(priority = 5)
-    public void delete() {
-        List<Trademark> list = TrademarkDaoImpl.getInstance().findAll();
-        for (Trademark li : list) {
-            TrademarkDaoImpl.getInstance().delete(TrademarkDaoImpl.getInstance().findById(li.getId()));
-        }
-        assertTrue(!list.isEmpty());
-    }
-
 }

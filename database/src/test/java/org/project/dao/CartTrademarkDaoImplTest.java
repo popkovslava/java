@@ -1,72 +1,49 @@
 package org.project.dao;
 
-import java.io.Serializable;
 import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.junit.Before;
-import org.project.entity.CartLicense;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.project.dao.Interface.CartTrademarkDao;
 import org.project.entity.CartTrademark;
-import org.project.manager.SessionFactoryManager;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.assertNotNull;
-import static org.testng.Assert.assertNotEquals;
+import static org.junit.Assert.assertThat;
 
+@RunWith(SpringRunner.class)
+@ContextConfiguration("classpath:application-context.xml")
+@Transactional
 public class CartTrademarkDaoImplTest {
 
-    private static final SessionFactory SESSION_FACTORY = SessionFactoryManager.getSessionFactory();
+    @Autowired
+    private CartTrademarkDao cartTrademarkDao;
 
-    @AfterClass
-    public static void after() {
-        SESSION_FACTORY.close();
+    @Test
+    public void checkExisting() {
+        assertNotNull("Spring context is not loaded", cartTrademarkDao);
     }
 
-    @Before
-    public void cleanEntity() {
-        try (Session session = SESSION_FACTORY.openSession()) {
-            session.beginTransaction();
-            session.createQuery("delete from CartTrademark ");
-            session.getTransaction().commit();
-        }
-    }
-
-    @Test(priority = 1)
+    @Test
     public void checkSaveEntity() {
-        CartTrademark list = new CartTrademark();
-        list.setName("Save");
-        list.setTestOne("TestOne");
-        Serializable lis = CartTrademarkDaoImpl.getInstance().save(list);
-        assertNotNull("Id is null", lis);
+        Long id = cartTrademarkDao.save(new CartTrademark("Test", "Test"));
+        assertNotNull("Entity is not saved", id);
     }
 
-    @Test(priority = 2)
-    public void checkFindById() {
-        List<CartTrademark> list = CartTrademarkDaoImpl.getInstance().findAll();
-        for (CartTrademark li : list) {
-            CartTrademark ln = CartTrademarkDaoImpl.getInstance().findById(li.getId());
-            assertNotNull("Id is null", ln);
-        }
+    @Test
+    public void checkFindAll() {
+        List<CartTrademark> cartTrademarks = cartTrademarkDao.findAll();
+        assertThat("Employees collection is not empty", cartTrademarks, hasSize(0));
     }
 
-    @Test(priority = 3)
-    public void findAll() {
-        List<CartTrademark> list = CartTrademarkDaoImpl.getInstance().findAll();
-        assertNotNull("Id is null", list);
-    }
-
-    @Test(priority = 4)
-    public void update() {
-        List<CartTrademark> list = CartTrademarkDaoImpl.getInstance().findAll();
-        for (CartTrademark li : list) {
-            String old = li.getTestOne();
-            li.setName("Update");
-            li.setTestOne("Update");
-            CartTrademarkDaoImpl.getInstance().update(li);
-            CartLicense news = CartLicenseDaoImpl.getInstance().findById(li.getId());
-            assertNotEquals(old, news);
-        }
-        assertNotNull("Id is null", list);
+    @Test
+    public void checkFindEntityById() {
+        CartTrademark cartTrademark = new CartTrademark("Test", "Test");
+        Long id = cartTrademarkDao.save(cartTrademark);
+        CartTrademark cartTrademark1 = cartTrademarkDao.findOne(id);
+        assertNotNull("FindById does not work", cartTrademark1);
     }
 }

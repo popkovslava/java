@@ -1,8 +1,13 @@
 package org.project.entity;
 
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,10 +29,12 @@ public class Lang extends Base<Long> {
     @Column(name = "ln", unique = true)
     private String Ln;
 
+
     @ManyToMany
     @JoinTable(name = "lnag_page", schema = "business_contact",
             joinColumns = {@JoinColumn(name = "lang_id")},
             inverseJoinColumns = {@JoinColumn(name = "page_id")})
     private Set<Lang> langSet = new HashSet<>();
+
 
 }

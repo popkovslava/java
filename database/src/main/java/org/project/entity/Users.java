@@ -32,6 +32,10 @@ public class Users extends Base<Long> {
     @OneToOne(mappedBy = "user", cascade = {CascadeType.ALL})
     private UserData userData;
 
+    public Users(String name) {
+        this.name = name;
+    }
+
     @ManyToMany
     @JoinTable(name = "user_role", schema = "business_contact",
             joinColumns = {@JoinColumn(name = "user_id")},

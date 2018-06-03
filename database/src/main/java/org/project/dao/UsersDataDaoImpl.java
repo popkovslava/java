@@ -1,16 +1,9 @@
 package org.project.dao;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import org.project.dao.Interface.UserDataDao;
 import org.project.entity.UserData;
+import org.springframework.stereotype.Repository;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class UsersDataDaoImpl extends BaseDao<Long, UserData> implements UserDataDao {
-
-    private static final UsersDataDaoImpl INSTANCE = new UsersDataDaoImpl();
-
-    public static UsersDataDaoImpl getInstance() {
-        return INSTANCE;
-    }
+@Repository
+public class UsersDataDaoImpl extends BaseDaoImpl<Long, UserData> implements UserDataDao {
 }

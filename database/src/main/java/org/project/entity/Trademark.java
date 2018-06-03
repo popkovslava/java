@@ -31,6 +31,10 @@ public class Trademark extends Base<Long> {
     @Column(name = "description")
     private String description;
 
+    public Trademark(String title) {
+        this.title = title;
+    }
+
     @ManyToMany(mappedBy = "trademark", cascade = {CascadeType.ALL})
     private Set<Users> users = new HashSet<>();
 

@@ -10,12 +10,9 @@ public interface BaseDao<PK extends Serializable, T extends Base<PK>> {
 
     List<T> findAll();
 
-    T findById(PK id);
+    T findOne(PK id);
 
     void update(T object);
 
     void delete(T object);
-
-    void removeAll();
-
 }

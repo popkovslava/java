@@ -1,71 +1,48 @@
 package org.project.dao;
 
-import java.io.Serializable;
 import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.project.dao.Interface.CartLicenseDao;
 import org.project.entity.CartLicense;
-import org.project.manager.SessionFactoryManager;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.assertNotNull;
-import static org.testng.Assert.assertNotEquals;
+import static org.junit.Assert.assertThat;
 
+@RunWith(SpringRunner.class)
+@ContextConfiguration("classpath:application-context.xml")
+@Transactional
 public class CartLicenseDaoImplTest {
+    @Autowired
+    private CartLicenseDao cartLicenseDao;
 
-    private static final SessionFactory SESSION_FACTORY = SessionFactoryManager.getSessionFactory();
-
-    @AfterClass
-    public static void after() {
-        SESSION_FACTORY.close();
+    @Test
+    public void checkExisting() {
+        assertNotNull("Spring context is not loaded", cartLicenseDao);
     }
 
-    @Before
-    public void cleanEntity() {
-        try (Session session = SESSION_FACTORY.openSession()) {
-            session.beginTransaction();
-            session.createQuery("delete from CartLicense ");
-            session.getTransaction().commit();
-        }
-    }
-
-    @Test(priority = 1)
+    @Test
     public void checkSaveEntity() {
-        CartLicense list = new CartLicense();
-        list.setName("Save");
-        list.setTestToo("TestToo");
-        Serializable lis = CartLicenseDaoImpl.getInstance().save(list);
-        assertNotNull("Id is null", lis);
+        Long id = cartLicenseDao.save(new CartLicense("Test", "Test"));
+        assertNotNull("Entity is not saved", id);
     }
 
-    @Test(priority = 2)
-    public void checkFindById() {
-        List<CartLicense> list = CartLicenseDaoImpl.getInstance().findAll();
-        for (CartLicense li : list) {
-            CartLicense ln = CartLicenseDaoImpl.getInstance().findById(li.getId());
-            assertNotNull("Id is null", ln);
-        }
+    @Test
+    public void checkFindAll() {
+        List<CartLicense> cartTrademarks = cartLicenseDao.findAll();
+        assertThat("Employees collection is not empty", cartTrademarks, hasSize(0));
     }
 
-    @Test(priority = 3)
-    public void findAll() {
-        List<CartLicense> list = CartLicenseDaoImpl.getInstance().findAll();
-        assertNotNull("Id is null", list);
-    }
-
-    @Test(priority = 4)
-    public void update() {
-        List<CartLicense> list = CartLicenseDaoImpl.getInstance().findAll();
-        for (CartLicense li : list) {
-            String old = li.getTestToo();
-            li.setName("Update");
-            li.setTestToo("Update");
-            CartLicenseDaoImpl.getInstance().update(li);
-            CartLicense news = CartLicenseDaoImpl.getInstance().findById(li.getId());
-            assertNotEquals(old, news);
-        }
-        assertNotNull("Id is null", list);
+    @Test
+    public void checkFindEntityById() {
+        CartLicense cartLicense = new CartLicense("Test", "Test");
+        Long id = cartLicenseDao.save(cartLicense);
+        CartLicense cartLicense1 = cartLicenseDao.findOne(id);
+        assertNotNull("FindById does not work", cartLicense1);
     }
 }
