@@ -51,7 +51,8 @@ CREATE TABLE business_contact.posts(
 
 CREATE TABLE business_contact.users(
   id BIGSERIAL PRIMARY KEY,
-  name VARCHAR(100)
+  username VARCHAR(100),
+  password  VARCHAR(100)
 );
 
 CREATE TABLE business_contact.role(
@@ -108,7 +109,6 @@ CREATE TABLE business_contact.cart (
   testtoo varchar(100),
   testone varchar(100),
 );
-
 
 CREATE TABLE  business_contact.user_data
 (

@@ -29,7 +29,6 @@ public class Lang extends Base<Long> {
     @Column(name = "ln", unique = true)
     private String Ln;
 
-
     @ManyToMany
     @JoinTable(name = "lnag_page", schema = "business_contact",
             joinColumns = {@JoinColumn(name = "lang_id")},

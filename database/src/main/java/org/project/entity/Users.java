@@ -22,18 +22,22 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @Entity
-
 @Table(name = "users", schema = "business_contact")
 public class Users extends Base<Long> {
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "password")
+    private String password;
 
     @OneToOne(mappedBy = "user", cascade = {CascadeType.ALL})
     private UserData userData;
 
-    public Users(String name) {
-        this.name = name;
+    public Users(String username, String password)
+    {
+        this.username = username;
+        this.password=password;
     }
 
     @ManyToMany
@@ -53,5 +57,4 @@ public class Users extends Base<Long> {
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "trademark_id")})
     private Set<Trademark> trademark = new HashSet<>();
-
 }
