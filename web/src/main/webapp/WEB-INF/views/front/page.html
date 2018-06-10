@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" layout:decorate="~{template.html}">
+<head>
+    <title>Pages</title>
+</head>
+<body>
+<header layout:fragment="custom-header">
+    <div th:insert="~{fragments/header::header}"></div>
+</header>
+<section layout:fragment="custom-content">
+</section>
+<footer layout:fragment="custom-footer">
+    <div th:insert="~{fragments/footer::footer}"></div>
+</footer>
+</body>
+</html>

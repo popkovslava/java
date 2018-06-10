@@ -20,8 +20,6 @@ import lombok.ToString;
 @DiscriminatorColumn(name = "TYPE")
 @Table(name = "cart", schema = "business_contact")
 public abstract class Cart extends Base<Long> {
-
     @Column(name = "name", nullable = false)
     private String name;
-
 }
