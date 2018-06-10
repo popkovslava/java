@@ -15,7 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Setter
 @Getter
-@ToString
+@ToString(callSuper = true)
 @NoArgsConstructor
 @Entity
 @Table(name = "menu", schema = "business_contact")

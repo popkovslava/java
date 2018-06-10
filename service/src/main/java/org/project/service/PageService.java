@@ -1,7 +1,7 @@
 package org.project.service;
 
 import java.util.List;
-import org.project.dao.Interface.PagesDao;
+import org.project.dao.PagesRepository;
 import org.project.entity.Pages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class PageService {
 
     @Autowired
-    private final PagesDao pagesDao;
+    private final PagesRepository pagesDao;
 
-    public PageService(PagesDao pagesDao) {
+    public PageService(PagesRepository pagesDao) {
         this.pagesDao = pagesDao;
     }
 

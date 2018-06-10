@@ -13,7 +13,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Setter
 @Getter
-@ToString
+@ToString(callSuper = true)
 @NoArgsConstructor
 @Entity
 @Table(name = "lnag_page", schema = "business_contact")
