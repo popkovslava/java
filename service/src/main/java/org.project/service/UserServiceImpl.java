@@ -1,35 +1,47 @@
 package org.project.service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
-import org.project.repository.UsersRepository;
+import org.project.entity.Users;
+//import org.project.repository.RoleRepository;
+import org.project.repository.UserRepository;
+import org.project.repository.custom.UsersRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class UserServiceImpl implements UserService {
 
-    private final UsersRepository usersRepository;
+    private  final  UserRepository userRepository;
 
     @Autowired
-    public UserServiceImpl(UsersRepository usersRepository) {
-        this.usersRepository = usersRepository;
+    UserServiceImpl( UserRepository userRepository){
+        this.userRepository=userRepository;
     }
 
-    public UsersRepository users() {
-        return usersRepository;
+    public UserRepository users() {
+        return userRepository;
     }
 
-//    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        return Optional.of(name)
-//                .map(usersRepository::findByName)
-//                .map(detailsConverter::convert)
-//                .orElseThrow(() -> new UsernameNotFoundException("User does not exist!"));
-//    }
+    @Override
+    @Transactional(readOnly = true)
+    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+       return Optional.of(name).
+                map(userRepository::findByUsername)
+               .map(userRepository::userDetailsConverter)
+               .orElseThrow(()->new UsernameNotFoundException("User dos,not  exsist"));
+      }
+
+      public Users registerSave(Users user) {
+            return userRepository.save(user);
+      }
 }

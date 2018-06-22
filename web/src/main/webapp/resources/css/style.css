@@ -1,5 +1,23 @@
-panel-footer{
-    background-color:#337ab7;
-    border-color: #337ab7;
+footer{
+    height: 100px;
+    background-color:#000;
     color: #FFFFFF;
+}
+
+footer p{
+    text-align: center;
+    color: #FFFFFF;
+}
+
+footer a{
+    text-align: center;
+    color: #FFFFFF;
+}
+
+section{
+    margin-top: 5%;
+}
+
+#error{
+    margin-top: 10%;
 }

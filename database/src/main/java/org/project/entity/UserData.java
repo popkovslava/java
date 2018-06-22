@@ -24,7 +24,7 @@ public class UserData extends Base<Long> {
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    private Users user;
+    private Users users;
 
     @Column(name = "address")
     @Enumerated(EnumType.STRING)

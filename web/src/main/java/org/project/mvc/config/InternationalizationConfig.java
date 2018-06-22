@@ -4,6 +4,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -19,8 +20,8 @@ public class InternationalizationConfig implements WebMvcConfigurer {
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
-        resourceBundleMessageSource.setDefaultEncoding(UTF_8.name());
         resourceBundleMessageSource.setBasename("translations");
+        resourceBundleMessageSource.setDefaultEncoding(UTF_8.name());
         return resourceBundleMessageSource;
     }
 
@@ -31,6 +32,11 @@ public class InternationalizationConfig implements WebMvcConfigurer {
         return sessionLocaleResolver;
     }
 
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+    }
+
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
@@ -38,9 +44,10 @@ public class InternationalizationConfig implements WebMvcConfigurer {
         return localeChangeInterceptor;
     }
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+    @Bean
+    public Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder() {
+        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
+        return builder;
     }
 
     @Override

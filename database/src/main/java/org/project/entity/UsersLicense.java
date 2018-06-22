@@ -24,6 +24,7 @@ public class UsersLicense extends Base<Long> {
     @JoinColumn(name = "user_id")
     private Users users;
 
+
     @ManyToOne
     @JoinColumn(name = "license_id")
     private License license;

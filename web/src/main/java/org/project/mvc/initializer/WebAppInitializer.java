@@ -1,16 +1,17 @@
 package org.project.mvc.initializer;
-
 import org.project.config.ServiceConfig;
+import org.project.mvc.config.SecurityConfig;
 import org.project.mvc.config.WebConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 import javax.servlet.ServletRegistration;
 
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+
     private static final String SERVLET_MAPPING = "/";
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{ServiceConfig.class};
+        return new Class[]{ServiceConfig.class,SecurityConfig.class};
     }
 
     @Override
@@ -27,4 +28,7 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {
         registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
     }
+
+
+
 }
