@@ -1,12 +1,15 @@
 package org.project.mvc.config;
 
-import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
+//import org.thymeleaf.spring5.SpringTemplateEngine;
+//import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
+//import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Configuration
 public class ThymeleafConfig {
@@ -15,8 +18,9 @@ public class ThymeleafConfig {
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
         resolver.setCharacterEncoding(UTF_8.name());
-        resolver.setPrefix("/WEB-INF/views/front/");
+        resolver.setPrefix("/WEB-INF/views/");
         resolver.setSuffix(".html");
+        resolver.setCacheable(false);
         return resolver;
     }
 
@@ -25,8 +29,7 @@ public class ThymeleafConfig {
         SpringTemplateEngine engine = new SpringTemplateEngine();
         engine.setEnableSpringELCompiler(true);
         engine.setTemplateResolver(templateResolver());
-        engine.addDialect(new LayoutDialect());
-        //engine.setDialect(new SpringSecurityDialect());
+        engine.addDialect(new SpringSecurityDialect());
         return engine;
     }
 
@@ -35,6 +38,7 @@ public class ThymeleafConfig {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
         resolver.setTemplateEngine(templateEngine());
         resolver.setCharacterEncoding(UTF_8.name());
+        resolver.setCache(false);
         return resolver;
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"org.project.mvc.controller"})
-@Import(value = {InternationalizationConfig.class, ThymeleafConfig.class})
+@ComponentScan(basePackages = {"org.project.mvc.controller","org.project.service"})
+@Import(value = {org.project.mvc.config.InternationalizationConfig.class, org.project.mvc.config.ThymeleafConfig.class})
 public class WebConfig {
 }

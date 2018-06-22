@@ -1,9 +1,15 @@
 package org.project.repository.custom;
-import java.util.List;
+
 import org.project.entity.Users;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UsersRepositoryCustom {
-    List<Users> findByName(String username);
+
+    UserDetails userDetailsConverter(Users user);
+
 }

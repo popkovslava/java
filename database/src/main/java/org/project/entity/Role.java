@@ -1,30 +1,29 @@
 package org.project.entity;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import java.util.HashSet;
-import java.util.Set;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+//import lombok.AllArgsConstructor;
+//import lombok.Getter;
+//import lombok.NoArgsConstructor;
+//import lombok.Setter;
+//
+//import javax.persistence.Column;
+//import javax.persistence.Entity;
+//import javax.persistence.Table;
+//
+//
+//@Getter
+//@Setter
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Entity
+//@Table(name = "role", schema="business_contact")
+//public class Role extends Base<Long> {
+//    @Column(name = "name")
+//    private String name;
+//}
 
-@AllArgsConstructor
-@Setter
-@Getter
-@ToString(callSuper = true)
-@NoArgsConstructor
-@Entity
-@Table(name = "role", schema = "business_contact")
-public class Role extends Base<Long> {
 
-    @Column(name = "role")
-    private String role;
+public enum  Role {
 
-    @ManyToMany(mappedBy = "RoleSet", cascade = {CascadeType.ALL})
-    private Set<Users> users = new HashSet<>();
+    ADMIN,
+    USER
 }

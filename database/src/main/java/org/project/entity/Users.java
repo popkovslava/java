@@ -2,28 +2,26 @@ package org.project.entity;
 
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+//import javax.validation.constraints.Max;
+//import javax.validation.constraints.Min;
+//import javax.validation.constraints.NotEmpty;
+//import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@AllArgsConstructor
+@Data
 @Setter
 @Getter
-@ToString(callSuper = true)
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "users", schema = "business_contact")
-public class Users extends Base<Long> {
+public class Users extends Base<Long>  {
 
     @Column(name = "username")
     private String username;
@@ -31,20 +29,20 @@ public class Users extends Base<Long> {
     @Column(name = "password")
     private String password;
 
-    @OneToOne(mappedBy = "user", cascade = {CascadeType.ALL})
+
+    @OneToOne(mappedBy = "users", cascade = {CascadeType.ALL})
     private UserData userData;
 
-    public Users(String username, String password)
-    {
-        this.username = username;
-        this.password=password;
-    }
 
-    @ManyToMany
-    @JoinTable(name = "user_role", schema = "business_contact",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private Set<Role> RoleSet = new HashSet<>();
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+//    @ManyToMany
+//    @JoinTable(name = "user_role", schema = "business_contact",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "role_id"))
+//    private Set<Role> roles = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "user_license", schema = "business_contact",
@@ -57,4 +55,5 @@ public class Users extends Base<Long> {
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "trademark_id")})
     private Set<Trademark> trademark = new HashSet<>();
+
 }
